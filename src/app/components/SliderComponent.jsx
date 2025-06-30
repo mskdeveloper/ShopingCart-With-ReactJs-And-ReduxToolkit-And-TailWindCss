@@ -1,8 +1,8 @@
 "use client";
 import Slider from "react-slick";
-import slider1 from "./images/image1.jpg";
-import slider2 from "./images/image2.jpg";
-import slider3 from "./images/image3.jpg";
+import slider1 from "/public/images/image1.jpg";
+import slider2 from "/public/images/image2.jpg";
+import slider3 from "/public/images/image3.jpg";
 import Image from "next/image";
 const SliderComponent = () => {
   const slides = [slider1, slider2, slider3];
