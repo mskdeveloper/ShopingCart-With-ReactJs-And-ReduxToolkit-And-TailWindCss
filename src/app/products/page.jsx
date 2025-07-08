@@ -1,8 +1,24 @@
-import React from "react";
-import { products } from "@/../public/data/data.json";
+"use client";
+import React, { useState } from "react";
+import data from "@/../public/data/data.json";
 import ProductCard from "../components/ProductCard";
 
 const ProductsPage = () => {
+  const [sortOrder, setSortOrder] = useState("default");
+
+  let products = data.products;
+  if (sortOrder === "price-low") {
+    products = [...products].sort((a, b) => a.price - b.price);
+  } else if (sortOrder === "price-high") {
+    products = [...products].sort((a, b) => b.price - a.price);
+  } else if (sortOrder === "name") {
+    products = [...products].sort((a, b) => a.text.localeCompare(b.text));
+  }
+
+  const handleSort = (order) => {
+    setSortOrder(order);
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto my-12 px-4 max-[774px]:my-8 max-[774px]:px-3">
       {/* Page Tilte */}
@@ -102,7 +118,12 @@ const ProductsPage = () => {
             </h2>
             <div className="hidden min-[774px]:flex items-center gap-3">
               <span className="text-gray-700 font-medium">Sort By:</span>
-              <select className="border border-gray-300 rounded-md px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#a91f64]">
+              <select
+                className="border border-gray-300 rounded-md px-4 py-2
+               text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#a91f64]"
+                value={sortOrder}
+                onChange={(e) => handleSort(e.target.value)}
+              >
                 <option value="default">Newest</option>
                 <option value="price-low">Price: Low To High</option>
                 <option value="price-high">Price:High To Low</option>
@@ -110,6 +131,7 @@ const ProductsPage = () => {
               </select>
             </div>
           </div>
+
           {/* Products Card Section */}
           <div className="grid grid-cols-1 gap-6 max-[774px]:gap-3 min-[774px]:grid-cols-2 md:grid-cols-3">
             {products.map((product) => (
